@@ -8,6 +8,13 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Button x:Name="Scrolling_White_Bars" Content="Scrolling Black Bars
+                " HorizontalAlignment="Left" Margin="29,135,0,0" VerticalAlignment="Top" Width="395" FontSize="40" Click="Scrolling_White_Bars_Click"/>
+        <TextBlock x:Name="textblock"  FontSize="48px"
+                   HorizontalAlignment="Center" Margin="243,10,243,0" TextWrapping="Wrap"
+                   Text="Screen Fixer" VerticalAlignment="Top" Height="81" Width="474" TextAlignment="Center"/>
+        <Button x:Name="Scrolling_White_Bars_Copy" Content="Fix Stuck Pixel" HorizontalAlignment="Left" Margin="29,241,0,0" VerticalAlignment="Top" Width="395" FontSize="40"/>
+        <Button x:Name="Scrolling_White_Bars_Copy1" Content="Scrolling Black Bars" HorizontalAlignment="Left" Margin="29,345,0,0" VerticalAlignment="Top" Width="395" FontSize="40"/>
 
     </Grid>
 </Page>

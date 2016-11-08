@@ -26,5 +26,10 @@ namespace ScreenFixer
         {
             this.InitializeComponent();
         }
+
+        private void Scrolling_White_Bars_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ScrollingWhite));
+        }
     }
 }
