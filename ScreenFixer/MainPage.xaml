@@ -5,16 +5,91 @@
     xmlns:local="using:ScreenFixer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    MinHeight="620"
+    >
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button x:Name="Scrolling_White_Bars" Content="Scrolling Black Bars
-                " HorizontalAlignment="Left" Margin="29,135,0,0" VerticalAlignment="Top" Width="395" FontSize="40" Click="Scrolling_White_Bars_Click"/>
+    <Grid x:Name="grid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="VisualStateGroup1">
+                <VisualState x:Name="VisualState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0" MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="btnScrollingWhiteBars.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>20,107,20,0</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="btnFixStuckPixel.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>20,201,20,0</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="btnCycleColor.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>20,305,20,0</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="textBlock.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>23,375,13,0</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="textBlock.(FrameworkElement.HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="textBlock.(FrameworkElement.Width)" Value="324"/>
+                        <Setter Target="textBlock.(FrameworkElement.VerticalAlignment)" Value="Top"/>
+                        <Setter Target="textBlock.(FrameworkElement.Height)" Value="auto"/>
+                        <Setter Target="btnCycleColor_Copy.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>2,0,0,12</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="btnCycleColor_Copy.(FrameworkElement.HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="btnScrollingWhiteBars.(FrameworkElement.HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="textblock.(FrameworkElement.HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="textblock.(FrameworkElement.Margin)">
+                            <Setter.Value>
+                                <Thickness>0,5,0,0</Thickness>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Target="btnFixStuckPixel.(FrameworkElement.HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="btnCycleColor.(FrameworkElement.HorizontalAlignment)" Value="Center"/>
+                        <Setter Target="btnCycleColor_Copy.(FrameworkElement.VerticalAlignment)" Value="Bottom"/>
+                    </VisualState.Setters>
+                    <Storyboard AutoReverse="False"/>
+                </VisualState>
+                <VisualState x:Name="VisualState1">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="700" MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Button x:Name="btnScrollingWhiteBars" Content="{Binding WhiteBarsFix.Title, FallbackValue=Button1, Mode=OneWay}"
+                Command="{Binding SelectWhiteBarsFixCommand}"
+                 HorizontalAlignment="Left" Margin="29,135,0,0" VerticalAlignment="Top" Width="395" FontSize="40" />
         <TextBlock x:Name="textblock"  FontSize="48px"
                    HorizontalAlignment="Center" Margin="243,10,243,0" TextWrapping="Wrap"
                    Text="Screen Fixer" VerticalAlignment="Top" Height="81" Width="474" TextAlignment="Center"/>
-        <Button x:Name="Scrolling_White_Bars_Copy" Content="Fix Stuck Pixel" HorizontalAlignment="Left" Margin="29,241,0,0" VerticalAlignment="Top" Width="395" FontSize="40"/>
-        <Button x:Name="Scrolling_White_Bars_Copy1" Content="Scrolling Black Bars" HorizontalAlignment="Left" Margin="29,345,0,0" VerticalAlignment="Top" Width="395" FontSize="40"/>
+        <Button x:Name="btnFixStuckPixel" Content="{Binding StuckPixelFix.Title, FallbackValue=Button2, Mode=OneWay}" HorizontalAlignment="Left" Margin="29,241,0,0" 
+                VerticalAlignment="Top" Width="395" FontSize="40"  Command="{Binding SelectStuckPixelFixCommand}"/>
+        <Button x:Name="btnCycleColor" Content="{Binding CycleColorFix.Title, FallbackValue=Button3, Mode=OneWay}" HorizontalAlignment="Left" Margin="29,345,0,0" VerticalAlignment="Top" Width="395"
+                FontSize="40" Command="{Binding CycleColorFixCommand}" />
+        <TextBlock x:Name="textBlock" Margin="500,119,50,129" TextWrapping="Wrap" 
+                   Text="{Binding SelectedFix.Description, FallbackValue=TestDescrition, Mode=TwoWay}" 
+                   FontSize="36" RenderTransformOrigin="0.5,0.5">
+            <TextBlock.RenderTransform>
+                <CompositeTransform/>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+        <Button x:Name="btnCycleColor_Copy" Content="Start" HorizontalAlignment="Right" Margin="0,0,89,39" VerticalAlignment="Bottom"
+            FontSize="40" Click="btnStart_Copy_Click" Height="66" Width="170" RenderTransformOrigin="0.5,0.5" >
+            <Button.RenderTransform>
+                <CompositeTransform/>
+            </Button.RenderTransform>
+        </Button>
 
     </Grid>
 </Page>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Composition;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -16,6 +17,8 @@ using Windows.UI.Xaml.Hosting;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Gaming.Input;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -26,67 +29,73 @@ namespace ScreenFixer
     /// </summary>
     public sealed partial class ScrollingWhite : Page
     {
-        Vector3KeyFrameAnimation repositionAnimation;
+        
+
         public ScrollingWhite()
         {
             this.InitializeComponent();
-            InitializeAnimation();
-
         }
+
+      
+
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+           
+            ApplicationView.GetForCurrentView().TryEnterFullScreenMode();
+
+        
+         
+         
+         
+         
+         
+            
 
 
-            var targetVisual = ElementCompositionPreview.GetElementVisual(WhiteBar);
+            
 
-
-           await StartAnimation(targetVisual);
+                 await StartScrollAnimation(WhiteBar);
 
         }
 
-        private async Task StartAnimation(Visual targetVisual)
+        private async Task StartScrollAnimation(UIElement targetElement)
         {
+            var targetVisual = ElementCompositionPreview.GetElementVisual(targetElement);
+            
+            //NOTE Delay is a work around for animation not starting because UI was not rendered
             await Task.Delay(1);
-            targetVisual.StartAnimation("Offset", repositionAnimation);
+            targetVisual.StartAnimation("Offset", CreateScrollAnimation(targetVisual));
         }
 
 
-        private void InitializeAnimation()
+        private Vector3KeyFrameAnimation CreateScrollAnimation(Visual targetVisual)
         {
-            var targetVisual = ElementCompositionPreview.GetElementVisual(WhiteBar);
+            Vector3KeyFrameAnimation scrollAnimation;
+
             Compositor compositor = targetVisual.Compositor;
 
-            // Create an animation to animate targetVisual's Offset property to its final value
-             repositionAnimation = compositor.CreateVector3KeyFrameAnimation();
-            // repositionAnimation.InsertKeyFrame(1, new Vector3(0, 0, 0),compositor.CreateLinearEasingFunction());
-            repositionAnimation.InsertKeyFrame(1, new Vector3(1500, 0, 0),compositor.CreateLinearEasingFunction());
-            repositionAnimation.Duration = TimeSpan.FromSeconds(2);
-            //repositionAnimation.Target = "Offset";
+            scrollAnimation = compositor.CreateVector3KeyFrameAnimation();
 
-            repositionAnimation.StopBehavior = AnimationStopBehavior.SetToInitialValue;
-            repositionAnimation.DelayTime = TimeSpan.FromSeconds(0);
+            float screenWidth = (float)Window.Current.Bounds.Width;
+            scrollAnimation.InsertKeyFrame(1, new Vector3(screenWidth, 0, 0), compositor.CreateLinearEasingFunction());
 
-            repositionAnimation.IterationBehavior = AnimationIterationBehavior.Forever;
-            //repositionAnimation.InsertExpressionKeyFrame(1.0f, "this.FinalValue");
+            scrollAnimation.Duration = TimeSpan.FromSeconds(2);
+            scrollAnimation.Target = "Offset";
+            scrollAnimation.StopBehavior = AnimationStopBehavior.SetToInitialValue;
+            scrollAnimation.IterationBehavior = AnimationIterationBehavior.Forever;
 
-
-            // Run this animation when the Offset Property is changed
-            //  var repositionAnimations = compositor.CreateImplicitAnimationCollection();
-            //  repositionAnimations["Offset"] = repositionAnimation;
-
-            //targetVisual.ImplicitAnimations = repositionAnimations;
-           
+            return scrollAnimation;
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void Background_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            this.Frame.GoBack();
+        }
 
-            var targetVisual = ElementCompositionPreview.GetElementVisual(WhiteBar);
-            targetVisual.StartAnimation("Offset", repositionAnimation);
-
-            //targetVisual.Offset = new System.Numerics.Vector3(120f, 0f, 0f);
-
+        private void Page_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            this.Frame.GoBack();
         }
     }
 }

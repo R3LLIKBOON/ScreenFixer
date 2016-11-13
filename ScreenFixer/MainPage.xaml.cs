@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,14 +23,24 @@ namespace ScreenFixer
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        MainPageViewModel context = new MainPageViewModel();
+   
+        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+        {
+            base.OnNavigatingFrom(e);
+        }
         public MainPage()
         {
             this.InitializeComponent();
+
+            DataContext = context;
+            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
+
         }
 
-        private void Scrolling_White_Bars_Click(object sender, RoutedEventArgs e)
+        private void btnStart_Copy_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(ScrollingWhite));
+            this.Frame.Navigate(context.SelectedFix.PageType);
         }
     }
 }

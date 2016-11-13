@@ -6,12 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    
+    KeyDown="Page_KeyDown"
     >
 
-    <Grid Background="Black"  >
-        <Rectangle x:Name="WhiteBar"  Fill="White" Width="500"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="-510,0,0,0" Loaded="Page_Loaded" />
-        <Button  x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="852,697,0,0" VerticalAlignment="Top" Click="button_Click"/>
-
+    <Grid Background="Black"  Tapped="Background_Tapped" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  >
+            <Rectangle x:Name="WhiteBar"  Fill="White" Width="500"  HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="-510,0,0,0" Loaded="Page_Loaded" />
     </Grid>
 </Page>
