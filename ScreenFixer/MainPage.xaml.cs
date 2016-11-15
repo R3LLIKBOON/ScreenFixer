@@ -42,5 +42,10 @@ namespace ScreenFixer
         {
             this.Frame.Navigate(context.SelectedFix.PageType);
         }
+
+        private void btnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
     }
 }
